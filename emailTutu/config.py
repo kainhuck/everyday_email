@@ -1,7 +1,7 @@
 # email
 email = {
     "sender": "1628321264@qq.com",
-    "password": "***************",
+    "password": "hvulnwlglaitfbbf",
     "mailHost": "smtp.qq.com",
     "receivers": ["2604742450@qq.com", "1628321264@qq.com"]
 }

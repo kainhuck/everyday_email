@@ -4,27 +4,29 @@ import random
 from mytools.UserAgent import makeAgent
 from lxml import etree
 
-url = "http://www.artthat.net/category/newcollectors/arts/page/" + str(random.randint(1, 44)) + "/"
 
-article_xpath = '//div[@class="grids masonry-layout entries"]/article'
-article_xpath_2 = '//div[@class="grids masonry-layout entries masonry"]/article'
+def _init():
+    url = "http://www.artthat.net/category/newcollectors/arts/page/" + str(random.randint(1, 44)) + "/"
 
-r = requests.get(url, headers=makeAgent())
-r.encoding = r.apparent_encoding
+    article_xpath = '//div[@class="grids masonry-layout entries"]/article'
+    article_xpath_2 = '//div[@class="grids masonry-layout entries masonry"]/article'
 
-html = etree.HTML(r.text)
-num = "[" + str(random.randint(1, 10)) + "]"
-xpath = article_xpath + num
+    r = requests.get(url, headers=makeAgent())
+    r.encoding = r.apparent_encoding
 
-article = html.xpath(xpath)
-if len(article) == 0:
-    article = html.xpath(article_xpath_2 + num)
+    html = etree.HTML(r.text)
+    num = "[" + str(random.randint(1, 10)) + "]"
+    xpath = article_xpath + num
 
-pic = article[0].xpath("./figure/a/img/@src")
-link = article[0].xpath("./figure/a/@href")
-title = article[0].xpath("./header/h2/a/text()")
-summary = article[0].xpath("./div/p/text()")
+    article = html.xpath(xpath)
+    if len(article) == 0:
+        article = html.xpath(article_xpath_2 + num)
 
+    pic = article[0].xpath("./figure/a/img/@src")
+    link = article[0].xpath("./figure/a/@href")
+    title = article[0].xpath("./header/h2/a/text()")
+    summary = article[0].xpath("./div/p/text()")
+    return pic, link, title, summary
 
 # print(pic[0])
 # print(link[0])
@@ -32,6 +34,7 @@ summary = article[0].xpath("./div/p/text()")
 
 
 def get_art_pic():
+    pic, link, title, summary = _init()
     return '''
         <b>%s</b><br>
         <img alt="艺术图片" src="%s"><br>

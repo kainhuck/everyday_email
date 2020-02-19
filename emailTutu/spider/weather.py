@@ -64,53 +64,73 @@ def _init():
     else:
         return
 
+
 _init()
 
+
+def init(func):
+    def inner(*args, **kwargs):
+        _init()
+        return func(*args, **kwargs)
+
+    return inner
+
+
+@init
 def get_date():
     global date
     return " ".join(date)
 
 
+@init
 def get_temperature():
     global temperature
     return "".join(temperature)
 
 
+@init
 def get_weather():
     global weather
     return " ".join(weather)
 
 
+@init
 def get_weather_temp():
     global weather_temp
     return " ".join(weather_temp)
 
 
+@init
 def get_humidity():
     global humidity
     return " ".join(humidity)
 
 
+@init
 def get_wind():
     global wind
     return " ".join(wind)
 
 
+@init
 def get_sun():
     global sun
     return " ".join(sun)
 
 
+@init
 def get_air():
     global air
     return " ".join(air)
 
 
+@init
 def get_pm():
     global pm
     return " ".join(pm)
 
 
+@init
 def get_sun_rise():
     global sun_rise
     return " ".join(sun_rise)
